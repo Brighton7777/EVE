@@ -1,7 +1,6 @@
 import argparse
 import json
 import os
-# os.environ["CUDA_VISIBLE_DEVICES"] = '3'
 import random
 import numpy as np
 import torch
@@ -28,7 +27,6 @@ def setup_seeds(seed):
 def eval_model(args):
 
     setup_seeds(args.seed)
-    # device = torch.device("cuda") if torch.cuda.is_available() else "cpu"
     disable_torch_init()
 
     model_loader = ModelLoader(args.model)
@@ -55,12 +53,13 @@ def eval_model(args):
     # dump metric file
     file_parts = [
         f"pope_eval_{args.pope_type}_layers_{args.start_layer}-{args.end_layer}_tokens_{args.max_new_tokens}_eos",
+        "_jsd" if args.use_jsd else "",
         "_sample" if args.sample else "",
         f"_beams_{args.num_beams}" if args.num_beams != 1 else "",
         f"_alpha_{args.alpha}",
         f"_top_p_{args.threshold_top_p}",
         f"_top_k_{args.threshold_top_k}",
-        "deco"
+        f"_seed_{args.seed}"
     ]
 
     file_name = "".join(file_parts)
@@ -94,8 +93,8 @@ def eval_model(args):
                     max_new_tokens=5,
                     # return_dict_in_generate=True,
                     output_hidden_states=True,
-                    # use_uncond = True,
-                    use_deco = True,
+                    use_jsd = True,
+                    # use_deco = True,
                     alpha = args.alpha,
                     threshold_top_p=args.threshold_top_p, 
                     threshold_top_k=args.threshold_top_k,
@@ -126,7 +125,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="POPE evaluation on LVLMs.")
     parser.add_argument("--model", type=str, help="model")
     parser.add_argument("--pope-type", type=str, help="model")
-    parser.add_argument("--gpu-id", type=int, default=3, help="specify the gpu to load the model.")
     parser.add_argument(
         "--options",
         nargs="+",
@@ -137,7 +135,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--data-path",
         type=str,
-        default="/data2/zhr/datasets/coco2014/val2014/",
+        default="/data1/zhr/datasets/coco2014/val2014/",
         help="data path",
     )
     parser.add_argument("--batch-size", type=int, default=1)
@@ -148,12 +146,12 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=512)
-    parser.add_argument("--alpha", type=float, default=0.6)
+    parser.add_argument("--use_jsd", action="store_true")
+    parser.add_argument("--alpha", type=float, default=0.5)
     parser.add_argument("--threshold_top_p", type=float, default=0.9)
     parser.add_argument("--threshold_top_k", type=int, default=20)
     parser.add_argument("--start_layer", type=int, default=20)
     parser.add_argument("--end_layer", type=int, default=29)
-    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--seed", type=int, default=927)
     args = parser.parse_args()
-    # os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu_id)
     eval_model(args)

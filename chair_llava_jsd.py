@@ -1,5 +1,8 @@
 import argparse
 import torch
+import random
+import numpy as np
+import torch.backends.cudnn as cudnn
 import os
 import json
 from tqdm import tqdm
@@ -7,7 +10,7 @@ import shortuuid
 import sys
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # print(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -60,7 +63,14 @@ def load_images(image_files):
         out.append(image)
     return out
 
+def setup_seeds(seed):
 
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+
+    cudnn.benchmark = False
+    cudnn.deterministic = True
 
 
 
@@ -68,28 +78,23 @@ def eval_model(args):
     
     # set up gpu and logging
     
-    dist_util.setup_dist(args)
-    device = dist_util.device()
+    device = "cuda"
 
-    # Setup an experiment folder:
-    # if dist.get_rank() == 0:
-    #     os.makedirs(
-    #         args.log_path, exist_ok=True
-    #     )  # Make results folder (holds all experiment subfolders)
-    #     # model_string_name = args.model_path.split("/")[-1]
-    #     # experiment_index = len(glob(f"{args.log_path}/{model_string_name}/*"))
-    #     experiment_dir = f"{args.log_path}"  # Create an experiment folder
-    #     os.makedirs(experiment_dir, exist_ok=True)
-    #     logger = create_logger(experiment_dir)
-    #     logger.info(f"Experiment directory created at {experiment_dir}")
-    # else:
-    #     logger = create_logger(None)
+    base_dir = "./results/chair/eval/" + args.model
+    if not os.path.exists(base_dir):
+        os.makedirs(base_dir)
 
-    # answer file
-    if not os.path.exists(args.save_dir):
-        os.makedirs(args.save_dir)
-    answers_file = os.path.join(args.save_dir, f"jsd-greedy-alpha_{args.alpha}-seed_{args.seed}.jsonl")
+    # dump metric file
+    file_parts = [
+        f"chair_eval_layers_{args.start_layer}-{args.end_layer}_tokens_{args.max_new_tokens}_eos",
+        "_sample" if args.sample else "",
+        f"_beams_{args.num_beams}" if args.num_beams != 1 else "",
+        f"_alpha_{args.alpha}",
+        f"_top_p_{args.threshold_top_p}",
+        f"_top_k_{args.threshold_top_k}"
+    ]
 
+    file_name = "".join(file_parts)
     # Data
     with open("./opera_log/llava-1.5/ours.jsonl", "r", encoding="utf-8") as f:
         data_lines = f.readlines()
@@ -98,83 +103,77 @@ def eval_model(args):
     disable_torch_init()
     model_name = get_model_name_from_path(args.model_path)
     tokenizer, model, image_processor, context_len = load_pretrained_model(args.model_path, args.model_base, model_name, device=device)
-    with open(answers_file, "a") as ans_file:
-        for _, data_line in tqdm(enumerate(data_lines),total=500):
-            line = json.loads(data_line)
-            idx = line["image_id"]
-            image_file = args.data_path + "COCO_val2014_" + str(idx).zfill(12) + ".jpg"
-            qs = "Please describe this image in detail."#line["query"]
-            # cur_prompt = qs
-    
-            if model.config.mm_use_im_start_end:
-                qs = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN + DEFAULT_IM_END_TOKEN + '\n' + qs
-            else:
-                qs = DEFAULT_IMAGE_TOKEN + '\n' + qs
+    for _, data_line in tqdm(enumerate(data_lines),total=500):
+        line = json.loads(data_line)
+        idx = line["image_id"]
+        image_file = args.data_path + "COCO_val2014_" + str(idx).zfill(12) + ".jpg"
+        qs = "Please describe this image in detail."
 
-            conv = conv_templates[args.conv_mode].copy()
-            conv.append_message(conv.roles[0], qs)
-            conv.append_message(conv.roles[1], None)
-            prompt = conv.get_prompt()
+        if model.config.mm_use_im_start_end:
+            qs = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN + DEFAULT_IM_END_TOKEN + '\n' + qs
+        else:
+            qs = DEFAULT_IMAGE_TOKEN + '\n' + qs
 
-            input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, return_tensors='pt').unsqueeze(0).to(device)
-            image = Image.open(image_file)
-            image_tensor = image_processor.preprocess(image, return_tensors='pt')['pixel_values'][0]            
-            stop_str = conv.sep if conv.sep_style != SeparatorStyle.TWO else conv.sep2
-            keywords = [stop_str]
-            stopping_criteria = KeywordsStoppingCriteria(keywords, tokenizer, input_ids)
+        conv = conv_templates[args.conv_mode].copy()
+        conv.append_message(conv.roles[0], qs)
+        conv.append_message(conv.roles[1], None)
+        prompt = conv.get_prompt()
 
-            with torch.inference_mode():
-                with torch.no_grad():
-                    output_sequences = model.generate(
-                        input_ids,
-                        images=image_tensor.unsqueeze(0).half().to(device),
-                        do_sample=True if args.temperature > 0 else False,
-                        temperature=args.temperature,
-                        top_p=args.top_p,
-                        num_beams=args.num_beams,
-                        max_new_tokens=args.max_new_tokens,
-                        # return_dict_in_generate=True,
-                        output_hidden_states=True,
-                        stopping_criteria=[stopping_criteria],
-                        use_uncond = True,
-                        alpha = args.alpha,
-                        threshold_top_p=args.threshold_top_p, 
-                        threshold_top_k=args.threshold_top_k,
-                        early_exit_layers=[i for i in range(args.start_layer, args.end_layer)],
-                        return_dict=True
-                        )
-                
-            output_ids = output_sequences
-            input_token_len = input_ids.shape[1]
-            outputs = tokenizer.batch_decode(
-                    output_ids[:, input_token_len:], skip_special_tokens=True
-                )[0]
-            outputs = outputs.strip()
-                
-                
-            # logger.info(f"[{image_file}]")
-            # logger.info(f"prompt: {cur_prompt}") 
-            # logger.info(f"text: {outputs}")  
-            res_dict = {"image_id": idx,"caption": outputs}
-            ans_file.write(json.dumps(res_dict, ensure_ascii=False) + "\n")
-                
+        input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, return_tensors='pt').unsqueeze(0).to(device)
+        image = Image.open(image_file)
+        image_tensor = image_processor.preprocess(image, return_tensors='pt')['pixel_values'][0]            
+        stop_str = conv.sep if conv.sep_style != SeparatorStyle.TWO else conv.sep2
+        keywords = [stop_str]
+        stopping_criteria = KeywordsStoppingCriteria(keywords, tokenizer, input_ids)
+
+        with torch.inference_mode():
+            with torch.no_grad():
+                output_sequences = model.generate(
+                    input_ids,
+                    images=image_tensor.unsqueeze(0).half().to(device),
+                    do_sample=args.sample,
+                    temperature=args.temperature,
+                    top_p=args.top_p,
+                    num_beams=args.num_beams,
+                    max_new_tokens=args.max_new_tokens,
+                    # return_dict_in_generate=True,
+                    output_hidden_states=True,
+                    stopping_criteria=[stopping_criteria],
+                    use_jsd = True,
+                    alpha = args.alpha,
+                    threshold_top_p=args.threshold_top_p, 
+                    threshold_top_k=args.threshold_top_k,
+                    early_exit_layers=[i for i in range(args.start_layer, args.end_layer)],
+                    return_dict=True
+                    )
+            
+        output_ids = output_sequences
+        input_token_len = input_ids.shape[1]
+        outputs = tokenizer.batch_decode(
+                output_ids[:, input_token_len:], skip_special_tokens=True
+            )[0]
+        outputs = outputs.strip()
+            
+        with open(os.path.join(base_dir, file_name + ".jsonl"), "a") as f:
+            json.dump({"image_id": idx, "caption": outputs}, f)
+            f.write("\n") 
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-path", type=str, default="/data2/zhr/checkpoints/llava-v1.5-7b")
-    parser.add_argument("--data-path", type=str, default="/data2/zhr/datasets/coco2014/val2014/")
+    parser.add_argument("--model", type=str, default="llava-v1.5")
+    parser.add_argument("--model-path", type=str, default="/data1/zhr/checkpoints/llava-v1.5-7b")
+    parser.add_argument("--data-path", type=str, default="/data1/zhr/datasets/coco2014/val2014/")
     parser.add_argument("--model-base", type=str, default=None)
-    parser.add_argument("--save-dir", type=str, default="./results/llava-1.5/jsd")
     parser.add_argument("--conv-mode", type=str, default="llava_v1")
     parser.add_argument("--num-chunks", type=int, default=1)
     parser.add_argument("--chunk-idx", type=int, default=0)
     parser.add_argument("--temperature", type=float, default=-1) # 可以考虑调大温度试试
+    parser.add_argument("--sample", action="store_true")
     parser.add_argument("--top_p", type=float, default=None)
     parser.add_argument("--top_k", type=int, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=512)
-    parser.add_argument("--log_path", type=str, default="./results/llava-1.5/jsd/logs")
     parser.add_argument("--batch_size", type=int, default=1)
     parser.add_argument("--alpha", type=float, default=0.5)
     parser.add_argument("--threshold_top_p", type=float, default=0.9)
@@ -184,5 +183,5 @@ if __name__ == "__main__":
     parser.add_argument("--seed", type=int, default=927)
 
     args = parser.parse_args()
-    set_seed(args.seed)
+    setup_seeds(args.seed)
     eval_model(args)
