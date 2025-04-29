@@ -1180,9 +1180,6 @@ class GenerationMixin:
         early_exit_layers: Optional[List[int]] = None,
         use_uncond: Optional[bool] = None,
         use_jsd: Optional[bool] = None,
-        uncond_input_ids: Optional[torch.Tensor] = None,
-        uncond_inputs_embeds: Optional[torch.Tensor] = None,
-        uncond_attention_mask: Optional[torch.Tensor] = None,
         **kwargs,
     ) -> Union[GenerateOutput, torch.LongTensor]:
         r"""
@@ -1616,9 +1613,6 @@ class GenerationMixin:
                 threshold_top_p=threshold_top_p,
                 threshold_top_k=threshold_top_k,
                 early_exit_layers=early_exit_layers,
-                uncond_input_ids=uncond_input_ids,
-                uncond_inputs_embeds=uncond_inputs_embeds,
-                uncond_attention_mask=uncond_attention_mask,
                 **model_kwargs,
             )
 
@@ -2826,13 +2820,10 @@ class GenerationMixin:
     def cross_jsd_greedy_search(
         self,
         input_ids: torch.LongTensor,
-        uncond_input_ids: Optional[torch.Tensor] = None,
-        uncond_inputs_embeds: Optional[torch.Tensor] = None,
-        uncond_attention_mask: Optional[torch.Tensor] = None,
-        alpha: Optional[float] = None,
-        threshold_top_p: Optional[float] = None,
-        threshold_top_k: Optional[int] = None,
-        early_exit_layers: Optional[List[int]] = None,
+        alpha: float,
+        threshold_top_p: float,
+        threshold_top_k: int,
+        early_exit_layers: List[int],
         logits_processor: Optional[LogitsProcessorList] = None,
         stopping_criteria: Optional[StoppingCriteriaList] = None,
         max_length: Optional[int] = None,
@@ -2987,28 +2978,14 @@ class GenerationMixin:
         unfinished_sequences = torch.ones(input_ids.shape[0], dtype=torch.long, device=input_ids.device)
 
         # 文本先验输入
+        IMAGE_TOKEN_INDEX = -200
+        img_idx = torch.where(input_ids == IMAGE_TOKEN_INDEX)[1][0]
         uncond_model_kwargs = model_kwargs.copy()
-        if uncond_inputs_embeds is not None:
-            uncond_input_ids = input_ids.clone()
-            uncond_model_kwargs["inputs_embeds"] = uncond_inputs_embeds
-            uncond_model_kwargs["attention_mask"] = uncond_attention_mask
-        else:
-            uncond_input_ids = uncond_input_ids
-            uncond_model_kwargs["attention_mask"] = uncond_attention_mask
-
-        # IMAGE_TOKEN_INDEX = -200
-        # img_idx = torch.where(input_ids == IMAGE_TOKEN_INDEX)[1][0]
-        # uncond_model_kwargs = model_kwargs.copy()
-        # uncond_input_ids = input_ids.clone()
-        # uncond_input_ids = torch.cat([uncond_input_ids[:, :img_idx], uncond_input_ids[:, img_idx+1:]], dim=-1)
-        # uncond_attention_mask = uncond_model_kwargs["attention_mask"]
-        # uncond_model_kwargs["attention_mask"] = torch.cat([uncond_attention_mask[:, :img_idx], uncond_attention_mask[:, img_idx+1:]], dim=-1)
-
-        # print("input_ids", input_ids.shape)
-        # print("attention_mask", model_kwargs["attention_mask"].shape)
-        # print("uncond_input_ids", uncond_input_ids.shape)
-        # print("uncond_attention_mask", uncond_model_kwargs["attention_mask"].shape)
-
+        uncond_input_ids = input_ids.clone()
+        uncond_input_ids = torch.cat([uncond_input_ids[:, :img_idx], uncond_input_ids[:, img_idx+1:]], dim=-1)
+        uncond_attention_mask = uncond_model_kwargs["attention_mask"]
+        uncond_model_kwargs["attention_mask"] = torch.cat([uncond_attention_mask[:, :img_idx], uncond_attention_mask[:, img_idx+1:]], dim=-1)
+        
 
         this_peer_finished = False  # used by synced_gpus only
         while True:

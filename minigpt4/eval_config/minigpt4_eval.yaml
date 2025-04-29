@@ -5,7 +5,7 @@ model:
   end_sym: "###"
   low_resource: False
   prompt_template: "###Human: {} ###Assistant: "
-  ckpt: "/path/to/models/minigpt4/prerained_minigpt4_7b.pth"
+  ckpt: "/data1/zhr/checkpoints/minigpt4/vicuna-7b/prerained_minigpt4_7b.pth"
 
 datasets:
   cc_sbu_align:

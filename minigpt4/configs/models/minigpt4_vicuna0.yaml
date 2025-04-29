@@ -15,7 +15,7 @@ model:
   # generation configs
   prompt: ""
 
-  llama_model: "/path/to/models/vision-cair-vicuna-7b"
+  llama_model: "/data1/zhr/checkpoints/minigpt4/vicuna-7b"
 
 preprocess:
   vis_processor:

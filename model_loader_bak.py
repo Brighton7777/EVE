@@ -11,7 +11,6 @@ from constants import (
     SHIKRA_IMAGE_TOKEN_LENGTH,
     SHIKRA_IMG_END_TOKEN,
     SHIKRA_IMG_START_TOKEN,
-    INSTRUCTION_TEMPLATE_NO_IMG
 )
 from llava.mm_utils import get_model_name_from_path
 from llava.model.builder import load_pretrained_model
@@ -69,7 +68,7 @@ class MiniGPT4Config:
 
 def load_model(model):
     if model == "llava-1.5":
-        model_path = os.path.expanduser("/data1/zhr/checkpoints/llava-v1.5-7b")
+        model_path = os.path.expanduser("/path/to/llava-v1.5-7b")
         return load_llava_model(model_path)
 
     elif model == "minigpt4":
@@ -126,16 +125,9 @@ def prepare_llava_inputs(template, query, image, tokenizer):
     )
 
     input_ids = torch.cat([bos, token_before, image_token, token_after], dim=1)
-    img_idx = torch.where(input_ids == IMAGE_TOKEN_INDEX)[1][0].item()
-    uncond_input_ids = torch.cat([input_ids[:, :img_idx], input_ids[:, img_idx+1:]], dim=-1)
-    uncond_attention_mask = torch.ones(uncond_input_ids.shape[:2], dtype=torch.long, device=uncond_input_ids.device)
-
     kwargs = {}
-    kwargs["images"] = image_tensor.unsqueeze(0).half().to("cuda")
+    kwargs["images"] = image_tensor.half()
     kwargs["input_ids"] = input_ids
-    kwargs["uncond_input_ids"] = uncond_input_ids
-    kwargs['uncond_attention_mask'] = uncond_attention_mask
-
 
     return qu, img_start_idx, img_end_idx, kwargs
 
@@ -145,19 +137,10 @@ def prepare_minigpt4_inputs(template, query, image, model):
     qu = [template.replace("<question>", q) for q in query]
     batch_size = len(query)
 
-    uncond_template = INSTRUCTION_TEMPLATE_NO_IMG["minigpt4"]
-    uncond_qu = [uncond_template.replace("<question>", q) for q in query]
-    
-
     img_embeds, atts_img = model.encode_img(image_tensor.to("cuda"))
     inputs_embeds, attention_mask = model.prompt_wrap(
         img_embeds=img_embeds, atts_img=atts_img, prompts=qu
     )
-
-    uncond_inputs_embeds, uncond_attention_mask = model.prompt_wrap(
-        img_embeds=None, atts_img=None, prompts=qu
-    )
-
 
     bos = (
         torch.ones([batch_size, 1], dtype=torch.int64, device=inputs_embeds.device)
@@ -178,17 +161,9 @@ def prepare_minigpt4_inputs(template, query, image, model):
     inputs_embeds = torch.cat([bos_embeds, inputs_embeds], dim=1)
     attention_mask = torch.cat([atts_bos, attention_mask], dim=1)
 
-    # uncond_inputs_embeds = torch.cat([inputs_embeds[:, :img_start_idx], inputs_embeds[:, img_end_idx:]], dim=1)
-    # uncond_attention_mask = torch.cat([attention_mask[:, :img_start_idx], attention_mask[:, img_end_idx:]], dim=1)
-
-    uncond_inputs_embeds = torch.cat([bos_embeds, uncond_inputs_embeds], dim=1)
-    uncond_attention_mask = torch.cat([atts_bos, uncond_attention_mask], dim=1)
-
     kwargs = {}
     kwargs["inputs_embeds"] = inputs_embeds
     kwargs["attention_mask"] = attention_mask
-    kwargs['uncond_inputs_embeds'] = uncond_inputs_embeds
-    kwargs['uncond_attention_mask'] = uncond_attention_mask
 
     return qu, img_start_idx, img_end_idx, kwargs
 

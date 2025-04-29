@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # CUDA_VISIBLE_DEVICES=2 python chair_llava_jsd.py
-# CUDA_VISIBLE_DEVICES=2 python chair_llava_jsd_pai.py
+CUDA_VISIBLE_DEVICES=0 python chair_llava_jsd_pai.py --use_jsd
 
 # python chair.py --cap_file ./results/llava-1.5/ori/greedy.jsonl --cache /data2/zhr/checkpoints/chair/cache.pkl --coco_path /data2/zhr/datasets/coco2014/annotations --save_path ./results/chair/ori.jsonl
 
