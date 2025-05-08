@@ -41,10 +41,11 @@ def eval_model(args):
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
     file_parts = [
-        f"chair_eval_layers_{args.start_layer}-{args.end_layer}_tokens_{args.max_new_tokens}_bs_{args.batch_size}",
+        f"chair_eval_tokens_{args.max_new_tokens}",
         "_sample" if args.sample else "",
         f"_beams_{args.num_beams}" if args.num_beams != 1 else "",
         "_jsd" if args.use_jsd else "",
+        f"_layers_{args.start_layer}-{args.end_layer}" if args.use_jsd else "",
         f"_alpha_{args.alpha}" if args.use_jsd else "",
         f"_top_p_{args.threshold_top_p}" if args.use_jsd else "",
         f"_top_k_{args.threshold_top_k}" if args.use_jsd else "",
@@ -84,7 +85,12 @@ def eval_model(args):
                 **kwargs,
             )
 
-        output_text = model_loader.decode(outputs)
+        if kwargs.get("input_ids", None) is not None:
+            input_ids_len = kwargs["input_ids"].size(1)
+        else:
+            input_ids_len = 0
+
+        output_text = model_loader.decode(outputs, input_ids_len)
 
         for i in range(len(output_text)):
             with open(file_path, "a") as f:
@@ -93,8 +99,7 @@ def eval_model(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="CHAIR evaluation on LVLMs.")
-    # parser.add_argument("--model", type=str, help="model", default='llava-1.5')
-    parser.add_argument("--model", type=str, help="model", default='minigpt4')
+    parser.add_argument("--model", type=str, help="model", default='llava-1.5')
     parser.add_argument(
         "--options",
         nargs="+",
@@ -118,7 +123,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=512)
     parser.add_argument("--use_jsd", action="store_true")
-    parser.add_argument("--alpha", type=float, default=0.5)
+    parser.add_argument("--alpha", type=float, default=0.6)
     parser.add_argument("--threshold_top_p", type=float, default=0.9)
     parser.add_argument("--threshold_top_k", type=int, default=20)
     parser.add_argument("--start_layer", type=int, default=20)

@@ -22,8 +22,12 @@ class COCODataSet(Dataset):
         img_file = self.img_files[index]
         img_id = int(img_file.split(".jpg")[0][-6:])
 
-        image = Image.open(os.path.join(self.data_path, img_file)).convert("RGB")
-        image = self.trans(image)
+        
+        if self.trans:
+            image = Image.open(os.path.join(self.data_path, img_file)).convert("RGB")
+            image = self.trans(image)
+        else:
+            image = os.path.join(self.data_path, img_file)
 
         return {"img_id": img_id, "image": image}
 

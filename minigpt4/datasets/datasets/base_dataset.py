@@ -12,8 +12,6 @@ from torch.utils.data import Dataset, ConcatDataset
 from torch.utils.data.dataloader import default_collate
 
 
-
-
 class BaseDataset(Dataset):
     def __init__(
         self, vis_processor=None, text_processor=None, vis_root=None, ann_paths=[]
@@ -25,16 +23,9 @@ class BaseDataset(Dataset):
         self.vis_root = vis_root
 
         self.annotation = []
-        # print("ann paths", ann_paths)
         for ann_path in ann_paths:
-            # print("ann_path", ann_path)
-            ann = json.load(open(ann_path, "r"))
-            if isinstance(ann, dict):
-                self.annotation.extend(json.load(open(ann_path, "r"))['annotations'])
-                # self.annotation.extend(json.load(open(ann_path, "r")))
-            else:
-                self.annotation.extend(json.load(open(ann_path, "r")))
-    
+            self.annotation.extend(json.load(open(ann_path, "r"))['annotations'])
+
         self.vis_processor = vis_processor
         self.text_processor = text_processor
 
@@ -53,7 +44,6 @@ class BaseDataset(Dataset):
     def _add_instance_ids(self, key="instance_id"):
         for idx, ann in enumerate(self.annotation):
             ann[key] = str(idx)
-
 
 
 class ConcatDataset(ConcatDataset):

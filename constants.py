@@ -11,8 +11,10 @@ INSTRUCTION_TEMPLATE = {
     "instructblip": "<ImageHere><question>",
     "lrv_instruct": "###Human: <Img><ImageHere></Img> <question> ###Assistant:",
     "shikra": "USER: <im_start><ImageHere><im_end> <question> ASSISTANT:",
-    "llava-1.5": "USER: <ImageHere> <question> ASSISTANT:",
+    # "llava-v1.5": "USER: <ImageHere> <question> ASSISTANT:",
+    "llava-v1.5": "<image>\n<question>",
     "internvl": "USER: <ImageHere> <question> ASSISTANT:",
+    "qwen-vl": "<img><image_path></img>\n<question>"
 }
 
 INSTRUCTION_TEMPLATE_NO_IMG = {
@@ -20,8 +22,10 @@ INSTRUCTION_TEMPLATE_NO_IMG = {
     "instructblip": "<question>",
     "lrv_instruct": "###Human: <question> ###Assistant:",
     "shikra": "USER: <question> ASSISTANT:",
-    "llava-1.5": "USER: <question> ASSISTANT:",
+    # "llava-v1.5": "USER: <question> ASSISTANT:",
+    "llava-v1.5": "<question>",
     "internvl": "USER: <question> ASSISTANT:",
+    "qwen-vl": "<question>"
 }
 
 SYSTEM_MESSAGE = "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."

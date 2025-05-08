@@ -138,3 +138,14 @@ def download_cached_file(url, check_hash=True, progress=False):
         dist.barrier()
 
     return get_cached_file_path()
+
+
+def all_reduce_mean(x):
+    world_size = get_world_size()
+    if world_size > 1:
+        x_reduce = torch.tensor(x).cuda()
+        dist.all_reduce(x_reduce)
+        x_reduce /= world_size
+        return x_reduce.item()
+    else:
+        return x

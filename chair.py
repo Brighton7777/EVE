@@ -450,9 +450,9 @@ if __name__ == '__main__':
     parser.add_argument("--caption_key", type=str, default="caption",
                         help="in each dict of cap_file, which key stores caption of the image.")
     
-    parser.add_argument("--cache", type=str, default="chair.pkl",
+    parser.add_argument("--cache", type=str, default="/data1/zhr/checkpoints/chair/cache.pkl",
                         help="pre inited CHAIR evaluator object, for fast loading.")
-    parser.add_argument("--coco_path", type=str, default='.../val2014/annotations',
+    parser.add_argument("--coco_path", type=str, default='/data1/zhr/datasets/coco2014/annotations',
                         help="only use for regenerating CHAIR evaluator object, will be ignored if uses cached evaluator.")
     
     parser.add_argument("--save_path", type=str, default="...",
@@ -472,8 +472,11 @@ if __name__ == '__main__':
     cap_dict = evaluator.compute_chair(args.cap_file, args.image_id_key, args.caption_key) 
     
     print_metrics(cap_dict)
+
+    args.save_path = args.cap_file.replace('eval', 'ans')
     
     if args.save_path:
+        os.makedirs(os.path.dirname(args.save_path), exist_ok=True)
         save_hallucinated_words(args.save_path, cap_dict)
 
 
