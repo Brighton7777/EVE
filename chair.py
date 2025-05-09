@@ -409,6 +409,56 @@ class CHAIR(object):
     
         return output 
 
+    def compute_sample_chair(self, cap, imid):
+        words, node_words, idxs, raw_words = self.caption_to_words(cap)
+        imid_to_objects = self.imid_to_objects
+
+        gt_objects = imid_to_objects[imid]
+        cap_dict = {'image_id': imid, 
+                    'caption': cap,
+                    'mscoco_hallucinated_words': [],
+                    'mscoco_gt_words': list(gt_objects),
+                    'mscoco_generated_words': list(node_words),
+                    'hallucination_idxs': [], 
+                    }
+
+        # :add:
+        cap_dict['metrics'] = {'CHAIRs': 0,
+                                'CHAIRi': 0,
+                                'Recall': 0,
+                                'Len': 0,
+                                }
+
+        #count hallucinated words
+        hallucinated = False
+        
+        # add
+        recall_gt_objects = set()
+        for word, node_word, idx in zip(words, node_words, idxs):
+            if node_word not in gt_objects:
+                cap_dict['mscoco_hallucinated_words'].append((word, node_word))
+                cap_dict['hallucination_idxs'].append(idx)
+                hallucinated = True
+            else:
+                recall_gt_objects.add(node_word)
+
+        
+        cap_dict['metrics']['CHAIRs'] = int(hallucinated)
+        cap_dict['metrics']['CHAIRi'] = 0.
+        cap_dict['metrics']['Recall'] = 0.
+        cap_dict['metrics']['Len'] = len(raw_words)
+
+        
+        if len(words) > 0:
+            cap_dict['metrics']['CHAIRi'] = len(cap_dict['mscoco_hallucinated_words'])/float(len(words))
+        
+        # add
+        if len(gt_objects) > 0:
+            cap_dict['metrics']['Recall'] = len(recall_gt_objects) / len(gt_objects)
+
+        return cap_dict
+
+
 def load_generated_captions(cap_file, image_id_key:str, caption_key:str):
     #Read in captions        
     # it should be list of dict

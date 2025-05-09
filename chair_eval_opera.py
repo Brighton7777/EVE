@@ -76,6 +76,7 @@ def eval_model(args):
                 temperature=args.temperature,
                 top_p=args.top_p,
                 num_beams=args.num_beams,
+                use_cache=True,
                 max_new_tokens=args.max_new_tokens,
                 use_deco = args.use_deco,
                 use_jsd = args.use_jsd,
@@ -109,14 +110,14 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=512)
-    parser.add_argument("--use_jsd", action="store_true")
+    parser.add_argument("--use_jsd", type=int, default=1)
     parser.add_argument("--use_deco", action="store_true")
     parser.add_argument("--alpha", type=float, default=0.6)
     parser.add_argument("--beta", type=float, default=0.6)
     parser.add_argument("--threshold_top_p", type=float, default=0.9)
     parser.add_argument("--threshold_top_k", type=int, default=20)
-    parser.add_argument("--start_layer", type=int, default=20)
-    parser.add_argument("--end_layer", type=int, default=29)
+    parser.add_argument("--start_layer", type=int, default=15)
+    parser.add_argument("--end_layer", type=int, default=32)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
     if args.use_jsd:

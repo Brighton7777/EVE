@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# echo llava
+echo llava
 
-# echo Vanilla
-# python pope_ans_all.py --gen_files ./results/pope_all/llava-v1.5/pope_eval_type_seed_42.jsonl
+echo Vanilla
+python pope_ans_all.py --gen_files ./results/pope_all/llava-v1.5/pope_eval_type_seed_42.jsonl
 
 # echo Greedy
 # python pope_ans_all.py --gen_files ./results/pope_all/llava-v1.5/pope_eval_type_jsd_layers_20-29_alpha_0.6_beta_0.6_top_p_0.9_top_k_20_seed_42.jsonl

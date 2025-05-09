@@ -3,9 +3,12 @@ import torch
 import os
 import json
 from tqdm import tqdm
-import random
+import requests
+from io import BytesIO
+import shortuuid
 import sys
 import os
+import random
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # print(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -14,6 +17,10 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from llava.utils import disable_torch_init
 from constants import INSTRUCTION_TEMPLATE
 from model_loader import ModelLoader
+
+from PIL import Image
+import math
+import re
 from transformers import set_seed
 
 
@@ -22,17 +29,17 @@ def eval_model(args):
     # Model
     disable_torch_init()
     model_loader = ModelLoader(args.model)
-    base_dir = "./results/chair_random/" + args.model
+    base_dir = "./results/chair_opera/" + args.model
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 
     # dump metric file
     file_parts = [
-        f"chair_eval_random",
+        f"chair_eval_opera_small_{args.num_data}",
         f"_tokens_{args.max_new_tokens}",
         "_sample" if args.sample else "",
         f"_beams_{args.num_beams}" if args.num_beams != 1 else "",
-        "_jsd" if args.use_jsd else "",
+        f"_jsd_{args.use_jsd}" if args.use_jsd else "",
         "_deco" if args.use_deco else "",
         f"_layers_{args.start_layer}-{args.end_layer}" if args.use_jsd else "",
         f"_alpha_{args.alpha}" if args.use_jsd else "",
@@ -45,19 +52,20 @@ def eval_model(args):
 
     template = INSTRUCTION_TEMPLATE[args.model]
 
-    # dataset
-    img_files = os.listdir(args.data_path)
-    random.shuffle(img_files)
+    with open("./opera_log/llava-1.5/ours.jsonl", "r", encoding="utf-8") as f:
+        data_lines = f.readlines()
     
+    random.shuffle(data_lines)
+
     answers_file = os.path.join(base_dir, file_name + ".jsonl")
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
-    for idx in tqdm(range(len(img_files)), total=500):
-        if idx == 500:
+    for idx, data_line in tqdm(enumerate(data_lines), total=args.num_data):
+        if idx == args.num_data:
             break
-        img_file = img_files[idx]
-        img_id = int(img_file.split(".jpg")[0][-6:])
-        image_path = args.data_path + img_file
+        line = json.loads(data_line)
+        idx = line["image_id"]
+        image_path = args.data_path + "COCO_val2014_" + str(idx).zfill(12) + ".jpg"
         qs = "Please describe this image in detail."
 
         if args.model == "llava-v1.5":
@@ -88,7 +96,7 @@ def eval_model(args):
             )
         output_text = model_loader.decode(outputs)[0]
 
-        ans_file.write(json.dumps({"image_id": img_id, "caption": output_text}, ensure_ascii=False) + "\n")
+        ans_file.write(json.dumps({"image_id": idx, "caption": output_text}, ensure_ascii=False) + "\n")
         ans_file.flush()
     ans_file.close()
 
@@ -107,15 +115,16 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=512)
-    parser.add_argument("--use_jsd", action="store_true")
+    parser.add_argument("--use_jsd",  type=int, default=1)
     parser.add_argument("--use_deco", action="store_true")
     parser.add_argument("--alpha", type=float, default=0.6)
     parser.add_argument("--beta", type=float, default=0.6)
     parser.add_argument("--threshold_top_p", type=float, default=0.9)
     parser.add_argument("--threshold_top_k", type=int, default=20)
-    parser.add_argument("--start_layer", type=int, default=20)
-    parser.add_argument("--end_layer", type=int, default=29)
+    parser.add_argument("--start_layer", type=int, default=15)
+    parser.add_argument("--end_layer", type=int, default=32)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--num_data", type=int, default=50)
     args = parser.parse_args()
     if args.use_jsd:
         print("use jsd")

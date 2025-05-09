@@ -1,8 +1,7 @@
 #!/bin/sh
 
-# CUDA_VISIBLE_DEVICES=1 python pope_eval_all.py --model llava-v1.5 --use_jsd
-# CUDA_VISIBLE_DEVICES=2 python pope_eval_all.py --model llava-v1.5 --use_jsd --sample
-# CUDA_VISIBLE_DEVICES=2 python pope_eval_all.py --model llava-v1.5 --use_jsd --num_beams 5
+# greedy
+CUDA_VISIBLE_DEVICES=1 python pope_eval_all.py --use_jsd --model llava-v1.5 --start_layer 15 --end_layer 32
 
 # CUDA_VISIBLE_DEVICES=1 python pope_eval_all.py --model llava-v1.5
 # CUDA_VISIBLE_DEVICES=1 python pope_eval_all.py --model minigpt4
@@ -10,10 +9,10 @@
 # CUDA_VISIBLE_DEVICES=1 python pope_eval_all.py --model qwen-vl
 
 # beam
-CUDA_VISIBLE_DEVICES=1 python pope_eval_all.py --model llava-v1.5 --num_beams 5 --pope-type popular
-CUDA_VISIBLE_DEVICES=3 python pope_eval_all.py --model minigpt4 --num_beams 5
-CUDA_VISIBLE_DEVICES=3 python pope_eval_all.py --model instructblip --num_beams 5
-CUDA_VISIBLE_DEVICES=3 python pope_eval_all.py --model qwen-vl --num_beams 5
+# CUDA_VISIBLE_DEVICES=1 python pope_eval_all.py --model llava-v1.5 --num_beams 5 --pope-type popular
+# CUDA_VISIBLE_DEVICES=3 python pope_eval_all.py --model minigpt4 --num_beams 5
+# CUDA_VISIBLE_DEVICES=3 python pope_eval_all.py --model instructblip --num_beams 5
+# CUDA_VISIBLE_DEVICES=3 python pope_eval_all.py --model qwen-vl --num_beams 5
 
 # sample
 # CUDA_VISIBLE_DEVICES=1 python pope_eval_all.py --model llava-v1.5 --sample --top_p 0.9 --temperature 1
