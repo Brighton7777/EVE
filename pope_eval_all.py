@@ -42,7 +42,7 @@ def recorder(out):
 
 def eval_model(args, model_loader):
 
-    base_dir = "./results/pope_all/" + args.model
+    base_dir = "./results/pope_all_test/" + args.model
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 
@@ -53,7 +53,7 @@ def eval_model(args, model_loader):
         f"_top_p_{args.top_p}" if args.sample else "",
         f"_temp_{args.temperature}" if args.sample else "",
         f"_beams_{args.num_beams}" if args.num_beams != 1 else "",
-        "_jsd" if args.use_jsd else "",
+        f"_jsd_{args.use_jsd}" if args.use_jsd else "",
         "_deco" if args.use_deco else "",
         f"_layers_{args.start_layer}-{args.end_layer}" if args.use_jsd else "",
         f"_alpha_{args.alpha}" if args.use_jsd else "",
@@ -124,14 +124,14 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=512)
-    parser.add_argument("--use_jsd", action="store_true")
+    parser.add_argument("--use_jsd", type=int, default=2)
     parser.add_argument("--use_deco", action="store_true")
     parser.add_argument("--alpha", type=float, default=0.6)
     parser.add_argument("--beta", type=float, default=0.6)
     parser.add_argument("--threshold_top_p", type=float, default=0.9)
     parser.add_argument("--threshold_top_k", type=int, default=20)
-    parser.add_argument("--start_layer", type=int, default=15)
-    parser.add_argument("--end_layer", type=int, default=33)
+    parser.add_argument("--start_layer", type=int, default=20)
+    parser.add_argument("--end_layer", type=int, default=29)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
     if args.use_jsd:

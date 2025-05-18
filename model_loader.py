@@ -65,7 +65,7 @@ def load_qwen_model(model_path):
     tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
     return tokenizer, model
 
-def prepare_llava_inputs(template, query, image_path, tokenizer, image_processor, model):
+def prepare_llava_inputs(template, query, image_path, tokenizer, image_processor, model, prefix):
     image = Image.open(image_path).convert("RGB")
     # image_tensor = image_processor.preprocess(image, return_tensors='pt')['pixel_values'][0].unsqueeze(0).half().to("cuda")
     image_tensor = process_images([image], image_processor, model.config).to(model.device, dtype=torch.float16)
@@ -75,6 +75,8 @@ def prepare_llava_inputs(template, query, image_path, tokenizer, image_processor
     conv.append_message(conv.roles[0], qu)
     conv.append_message(conv.roles[1], None)
     prompt = conv.get_prompt()
+    if prefix:
+        prompt += prefix
     input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, return_tensors='pt').unsqueeze(0).to(model.device)
 
     
@@ -352,10 +354,10 @@ class ModelLoader:
         else:
             raise ValueError(f"Unknown model: {self.model}")
 
-    def prepare_inputs_for_model(self, template, query, image_path):
+    def prepare_inputs_for_model(self, template, query, image_path, prefix=''):
         if self.model_name == "llava-v1.5":
             questions, kwargs, self.input_ids_len = prepare_llava_inputs(
-                template, query, image_path, self.tokenizer, self.image_processor, self.vlm_model
+                template, query, image_path, self.tokenizer, self.image_processor, self.vlm_model, prefix=prefix
             )
         elif self.model_name == "minigpt4":
             questions, kwargs, self.input_ids_len = prepare_minigpt4_inputs(

@@ -28,7 +28,7 @@ def eval_model(args):
     # Model
     disable_torch_init()
     model_loader = ModelLoader(args.model)
-    base_dir = "./results/chair_opera/" + args.model
+    base_dir = "./results/chair_opera_test/" + args.model
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 
@@ -38,14 +38,14 @@ def eval_model(args):
         f"_tokens_{args.max_new_tokens}",
         "_sample" if args.sample else "",
         f"_beams_{args.num_beams}" if args.num_beams != 1 else "",
-        "_jsd" if args.use_jsd else "",
+        f"_jsd_{args.use_jsd}" if args.use_jsd else "",
         "_deco" if args.use_deco else "",
         f"_layers_{args.start_layer}-{args.end_layer}" if args.use_jsd else "",
         f"_alpha_{args.alpha}" if args.use_jsd else "",
-        f"_beta_{args.beta}" if args.use_jsd else "",
         f"_top_p_{args.threshold_top_p}" if args.use_jsd else "",
         f"_top_k_{args.threshold_top_k}" if args.use_jsd else "",
         f"_seed_{args.seed}",
+        f"_{args.part}" if args.part else "",
     ]
     file_name = "".join(file_parts)
 
@@ -81,7 +81,6 @@ def eval_model(args):
                 use_deco = args.use_deco,
                 use_jsd = args.use_jsd,
                 alpha = args.alpha,
-                beta = args.beta,
                 threshold_top_p = args.threshold_top_p, 
                 threshold_top_k = args.threshold_top_k,
                 early_exit_layers=[i for i in range(args.start_layer, args.end_layer)],
@@ -110,18 +109,18 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=512)
-    parser.add_argument("--use_jsd", type=int, default=1)
+    parser.add_argument("--use_jsd", type=int, default=0)
     parser.add_argument("--use_deco", action="store_true")
     parser.add_argument("--alpha", type=float, default=0.6)
-    parser.add_argument("--beta", type=float, default=0.6)
     parser.add_argument("--threshold_top_p", type=float, default=0.9)
     parser.add_argument("--threshold_top_k", type=int, default=20)
-    parser.add_argument("--start_layer", type=int, default=15)
-    parser.add_argument("--end_layer", type=int, default=32)
+    parser.add_argument("--start_layer", type=int, default=20)
+    parser.add_argument("--end_layer", type=int, default=29)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--part", type=str, default="")
     args = parser.parse_args()
     if args.use_jsd:
-        print("use jsd")
+        print("use jsd", args.use_jsd)
     if args.use_deco:
         print("use deco")
     assert not (args.use_jsd is True and args.use_deco is True), "use_jsd is True and use_deco is True"
