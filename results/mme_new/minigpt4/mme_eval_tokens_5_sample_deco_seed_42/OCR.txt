@@ -5,7 +5,7 @@
 0003.jpg	Is the word in the logo "beavertails pastry"? Please answer yes or no.	Yes	No.
 0003.jpg	Is the word in the logo "beavertalls pastry"? Please answer yes or no.	No	The word in the logo
 0004.jpg	Is the word in the logo "old market sundries"? Please answer yes or no.	Yes	No.
-0004.jpg	Is the word in the logo "old market hundreds"? Please answer yes or no.	No	No.
+0004.jpg	Is the word in the logo "old market hundreds"? Please answer yes or no.	No	Yes.
 0005.jpg	Is the word in the logo "kress"? Please answer yes or no.	Yes	The word in the logo
 0005.jpg	Is the word in the logo "dress"? Please answer yes or no.	No	The word in the logo
 0006.jpg	Is the word in the logo "the beatles story liver pool"? Please answer yes or no.	Yes	No.

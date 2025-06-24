@@ -28,7 +28,7 @@ def eval_model(args):
     # Model
     disable_torch_init()
     model_loader = ModelLoader(args.model)
-    base_dir = "./results/chair_opera_test/" + args.model
+    base_dir = "./results/chair_opera_new/" + args.model
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 

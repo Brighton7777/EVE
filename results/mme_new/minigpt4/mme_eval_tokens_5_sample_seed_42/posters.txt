@@ -30,7 +30,7 @@ tt0083907.jpg	Is this movie originated from the country or region of usa? Please
 tt0083907.jpg	Is this movie originated from the country or region of bulgaria? Please answer yes or no.	No	No, this movie is
 tt0083946.jpg	Is this movie originated from the country or region of west germany? Please answer yes or no.	Yes	This movie appears to be
 tt0083946.jpg	Is this movie originated from the country or region of denmark? Please answer yes or no.	No	The film is not origin
-tt0084787.jpg	Is this movie titled the thing (1982)? Please answer yes or no.	Yes	
+tt0084787.jpg	Is this movie titled the thing (1982)? Please answer yes or no.	Yes	Yes.
 tt0084787.jpg	Is this movie titled jay and silent bob strike back (2001)? Please answer yes or no.	No	Yes, this is the
 tt0086250.jpg	Is this movie directed by brian de palma? Please answer yes or no.	Yes	No.
 tt0086250.jpg	Is this movie directed by patrice leconte? Please answer yes or no.	No	No
@@ -41,7 +41,7 @@ tt0093773.jpg	Is this movie titled the cell (2000)? Please answer yes or no.	No	
 tt0094291.jpg	Is this movie directed by oliver stone? Please answer yes or no.	Yes	No, this movie is
 tt0094291.jpg	Is this movie directed by raja gosnell? Please answer yes or no.	No	I am not able to
 tt0096446.jpg	Is this movie directed by ron howard? Please answer yes or no.	Yes	Yes, this movie was
-tt0096446.jpg	Is this movie directed by peter jackson? Please answer yes or no.	No	Yes, it is a
+tt0096446.jpg	Is this movie directed by peter jackson? Please answer yes or no.	No	Yes, it is directed
 tt0096463.jpg	Is this movie directed by mike nichols? Please answer yes or no.	Yes	No
 tt0096463.jpg	Is this movie directed by cary joji fukunaga? Please answer yes or no.	No	No, the movie is
 tt0096895.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes	Yes.

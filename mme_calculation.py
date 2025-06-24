@@ -146,6 +146,9 @@ class calculate_metrics:
                 
                 scores += task_score
 
+            if eval_type == "Perception":
+                task_score_dict["VCD total score"]=task_score_dict["existence"]+task_score_dict["count"]+task_score_dict["position"]+task_score_dict["color"]
+
             print("total score:", scores, "\n")
             for task_name, score in task_score_dict.items():
                 print("\t", task_name, " score:", score)
@@ -161,5 +164,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     results_dir = args.results_dir
+    print("file: ", results_dir)
     cal.process_result(results_dir)
 

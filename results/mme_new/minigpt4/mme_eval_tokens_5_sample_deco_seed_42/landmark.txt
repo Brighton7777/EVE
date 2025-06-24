@@ -72,7 +72,7 @@
 016e68628ea6c7ee.jpg	Is this an image of Our Lady Church (Ettlingen)? Please answer yes or no.	No	No.
 01862535ce8961ee.jpg	Is this an image of Mont Tendre? Please answer yes or no.	Yes	No
 01862535ce8961ee.jpg	Is this an image of Ogden Utah Temple? Please answer yes or no.	No	No.
-0186742e7963fb3c.jpg	Is this a photo of Ozegahara? Please answer yes or no.	Yes	No.
+0186742e7963fb3c.jpg	Is this a photo of Ozegahara? Please answer yes or no.	Yes	Yes.
 0186742e7963fb3c.jpg	Is this a photo of San Giovenale (Orvieto)? Please answer yes or no.	No	Yes.
 01928acd6dfe6cdd.jpg	Is this a picture of Watergate Bay? Please answer yes or no.	Yes	No.
 01928acd6dfe6cdd.jpg	Is this a picture of Cairnpapple Hill? Please answer yes or no.	No	No, this is not
@@ -207,7 +207,7 @@
 05095dd2b6715fc3.jpg	Is this an image of Sampsonievsky Cathedral? Please answer yes or no.	Yes	No.
 05095dd2b6715fc3.jpg	Is this an image of I. and E. Greenwald Steam Engine No. 1058? Please answer yes or no.	No	No.
 05685b1070b828f5.jpg	Is this a photo of Wurstelprater? Please answer yes or no.	Yes	Yes, this photo is
-05685b1070b828f5.jpg	Is this a photo of Nanmyaebonthar Sannandawya Sandamuni Pagoda? Please answer yes or no.	No	Yes, this is a
+05685b1070b828f5.jpg	Is this a photo of Nanmyaebonthar Sannandawya Sandamuni Pagoda? Please answer yes or no.	No	Yes
 05b01b255cec2bfb.jpg	Is this a photo of Puthoorppilly Sree Krishnaswamy Temple? Please answer yes or no.	Yes	The image shows a cour
 05b01b255cec2bfb.jpg	Is this a photo of Villa Reale (Marlia)? Please answer yes or no.	No	No
 05bcf05b4460d2c3.jpg	Is this an image of Museo archeologico nazionale dell'Umbria? Please answer yes or no.	Yes	Yes, this image is
@@ -278,7 +278,7 @@
 0962855b67159733.jpg	Is this a photo of ToonSeum? Please answer yes or no.	No	No.
 09a51d517f1a72d5.jpg	Is this a picture of Ford's Theatre? Please answer yes or no.	Yes	No, this is not
 09a51d517f1a72d5.jpg	Is this a picture of Burg Hachen? Please answer yes or no.	No	Yes, this is a
-09ae0628a75e4fcc.jpg	Is this a picture of Onze-Lieve-Vrouw Hemelvaartkerk (Zottegem)? Please answer yes or no.	Yes	Yes, this is a
+09ae0628a75e4fcc.jpg	Is this a picture of Onze-Lieve-Vrouw Hemelvaartkerk (Zottegem)? Please answer yes or no.	Yes	No, this is not
 09ae0628a75e4fcc.jpg	Is this a picture of Salvation Army in Canada? Please answer yes or no.	No	No, this is not
 09b7acf87c8046ec.jpg	Is this an image of Church of the Epiphany (Yaroslavl)? Please answer yes or no.	Yes	No.
 09b7acf87c8046ec.jpg	Is this an image of Szlenkier Palace? Please answer yes or no.	No	No, this image does
@@ -305,7 +305,7 @@
 0ba6fa7ade050d49.jpg	Is this a photo of Churches in Zemaiciu Kalvarija? Please answer yes or no.	Yes	No.
 0ba6fa7ade050d49.jpg	Is this a photo of Waiola Church? Please answer yes or no.	No	No
 0bd72080836eac97.jpg	Is this a picture of Castelo de Sesimbra? Please answer yes or no.	Yes	No
-0bd72080836eac97.jpg	Is this a picture of Gouffre Berger? Please answer yes or no.	No	No.
+0bd72080836eac97.jpg	Is this a picture of Gouffre Berger? Please answer yes or no.	No	Yes.
 0bdd954254310e73.jpg	Is this a photo of Melrose House? Please answer yes or no.	Yes	No
 0bdd954254310e73.jpg	Is this a photo of Former water tower (Tsubame, Niigata)? Please answer yes or no.	No	This is not a photo
 0c06fe97f38f6f88.jpg	Is this a photo of Belvoir Castle? Please answer yes or no.	Yes	No.
@@ -321,7 +321,7 @@
 0cf48b827c9c99de.jpg	Is this a photo of Beatus Rhenanus Bridge? Please answer yes or no.	Yes	Yes, this is a
 0cf48b827c9c99de.jpg	Is this a photo of Ossian Hall? Please answer yes or no.	No	No, this is not
 0d23f6c345b68c05.jpg	Is this an image of Monte Olivia? Please answer yes or no.	Yes	Yes, this image shows
-0d23f6c345b68c05.jpg	Is this an image of Crackstate? Please answer yes or no.	No	Yes.
+0d23f6c345b68c05.jpg	Is this an image of Crackstate? Please answer yes or no.	No	No.
 0d70bceb2557d1f4.jpg	Is this an image of Spaso-Preobrazhensky Cathedral (Pereslavl-Zalessky)? Please answer yes or no.	Yes	This image appears to be
 0d70bceb2557d1f4.jpg	Is this an image of Manta Rota? Please answer yes or no.	No	No, this image is
 0d7716f4aed0c9fa.jpg	Is this a photo of Willemsbrug in Rotterdam? Please answer yes or no.	Yes	Yes, this is a

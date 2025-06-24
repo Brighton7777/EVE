@@ -98,7 +98,7 @@
 18566.jpg	Is this artwork created by starnina, gherardo di jacopo? Please answer yes or no.	No	No.
 18604.jpg	Is this artwork created by hardouin-mansart, jules? Please answer yes or no.	Yes	No, this artwork
 18604.jpg	Is this artwork created by kerseboom, friedrich? Please answer yes or no.	No	Yes, this artwork
-18722.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes	No.
+18722.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes	Yes.
 18722.jpg	Does this artwork exist in the form of sculpture? Please answer yes or no.	No	No, this artwork
 1873.jpg	Does this artwork exist in the form of architecture? Please answer yes or no.	Yes	Yes, this artwork
 1873.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	No	No, this artwork
@@ -180,9 +180,7 @@
 2490.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	No	No, this artwork
 2507.jpg	Is this artwork displayed in private collection? Please answer yes or no.	Yes	Yes, this artwork
 2507.jpg	Is this artwork displayed in st. vitus's cathedral, prague? Please answer yes or no.	No	No, this artwork
-25312.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes	yes
-
-The painting
+25312.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes	yes  The painting
 25312.jpg	Does this artwork exist in the form of metalwork? Please answer yes or no.	No	No, this artwork
 25476.jpg	Is this artwork created by michelangelo buonarroti? Please answer yes or no.	Yes	Yes, this artwork
 25476.jpg	Is this artwork created by beuckelaer, joachim? Please answer yes or no.	No	The artwork depict

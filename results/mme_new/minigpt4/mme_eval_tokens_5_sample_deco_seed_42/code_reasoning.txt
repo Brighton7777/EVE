@@ -11,9 +11,7 @@
 0006.png	The image shows a python code. Is the output of the code '0'? Please answer yes or no.	Yes	Yes.
 0006.png	The image shows a python code. Is the output of the code '1'? Please answer yes or no.	No	The output of the code
 0007.png	Is a c++ code shown in the picture? Please answer yes or no.	Yes	Yes, the code shown
-0007.png	Is a python code shown in the picture? Please answer yes or no.	No	yes
-
-The code
+0007.png	Is a python code shown in the picture? Please answer yes or no.	No	yes  The code
 0008.png	The image shows a python code. Is the output of the code '1234'? Please answer yes or no.	Yes	Yes, the output of
 0008.png	The image shows a python code. Is the output of the code '12345'? Please answer yes or no.	No	Yes, the output of
 0009.png	The image shows a python code. Is the output of the code '36'? Please answer yes or no.	Yes	Yes.

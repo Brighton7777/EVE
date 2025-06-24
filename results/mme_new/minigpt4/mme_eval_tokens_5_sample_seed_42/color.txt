@@ -17,7 +17,7 @@
 000000047112.jpg	Is there a white plate in the image? Please answer yes or no.	Yes	Yes, there is a
 000000047112.jpg	Is there a yellow plate in the image? Please answer yes or no.	No	No.
 000000047121.jpg	Is there a black cat in the image? Please answer yes or no.	Yes	No.
-000000047121.jpg	Is there a brown cat in the image? Please answer yes or no.	No	Yes.
+000000047121.jpg	Is there a brown cat in the image? Please answer yes or no.	No	Yes. There is a
 000000053529.jpg	Is there a green hat in the image? Please answer yes or no.	Yes	No.
 000000053529.jpg	Is there a red hat in the image? Please answer yes or no.	No	No
 000000053994.jpg	Is there a gray wall in the image? Please answer yes or no.	Yes	Yes, there is a

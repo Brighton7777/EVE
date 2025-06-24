@@ -59,9 +59,7 @@
 0140a7d5446719c3.jpg	Is this a photo of Friday Mosque, Herat? Please answer yes or no.	Yes	No.
 0140a7d5446719c3.jpg	Is this a photo of Hexenturm (Burg (bei Magdeburg))? Please answer yes or no.	No	Yes, this is a
 01416124a7ab211a.jpg	Is this a photo of Ajuntament de Mollerussa? Please answer yes or no.	Yes	I cannot determine whether this
-01416124a7ab211a.jpg	Is this a photo of Episcopal Diocese of Northern Indiana? Please answer yes or no.	No	Yes
-
-Alright
+01416124a7ab211a.jpg	Is this a photo of Episcopal Diocese of Northern Indiana? Please answer yes or no.	No	Yes  Alright
 01425c4d35880aad.jpg	Is this an image of Museu de Sant Boi de Llobregat? Please answer yes or no.	Yes	I do not have enough
 01425c4d35880aad.jpg	Is this an image of Bezdonnoye Lake, Moscow Oblast? Please answer yes or no.	No	Yes.
 014c50e91cf799c7.jpg	Is this a photo of Clearwater Beach, Florida? Please answer yes or no.	Yes	No, this is not
@@ -88,7 +86,7 @@ Alright
 01b715ceb7050bce.jpg	Is this a picture of Augsburger Hotelturm? Please answer yes or no.	No	No.
 01b9b58a573c45f0.jpg	Is this a picture of St Mary Redcliffe? Please answer yes or no.	Yes	No.
 01b9b58a573c45f0.jpg	Is this a picture of Kirche zur Heiligsten Dreifaltigkeit, Vienna? Please answer yes or no.	No	No, this is not
-01bc5557ed2616ad.jpg	Is this a photo of Intercession of the Theotokos church in Lutsk? Please answer yes or no.	Yes	No, this is not
+01bc5557ed2616ad.jpg	Is this a photo of Intercession of the Theotokos church in Lutsk? Please answer yes or no.	Yes	This is a photo of
 01bc5557ed2616ad.jpg	Is this a photo of Cap 110? Please answer yes or no.	No	No, this is not
 01c0e0ff84631905.jpg	Is this a photo of Ribblehead Viaduct? Please answer yes or no.	Yes	No.
 01c0e0ff84631905.jpg	Is this a photo of Church of Saint George in Koptevo? Please answer yes or no.	No	No, this is not
@@ -153,7 +151,7 @@ Alright
 034d066523bb20d1.jpg	Is this a photo of Ibrahim-al-Ibrahim Mosque? Please answer yes or no.	Yes	No.
 034d066523bb20d1.jpg	Is this a photo of Atami Castle? Please answer yes or no.	No	Yes.
 036b60d84c6ebc63.jpg	Is this a photo of Frederik V statue in Amalienborg Palace? Please answer yes or no.	Yes	The photo shows the Freder
-036b60d84c6ebc63.jpg	Is this a photo of Karl-Bittel-Park? Please answer yes or no.	No	Yes.
+036b60d84c6ebc63.jpg	Is this a photo of Karl-Bittel-Park? Please answer yes or no.	No	No.
 03729394d18f7e9a.jpg	Is this an image of Sapporo Clock Tower? Please answer yes or no.	Yes	No.
 03729394d18f7e9a.jpg	Is this an image of Saint Nikolaus Church (Beuster)? Please answer yes or no.	No	Yes.
 0384fd0664c0ca62.jpg	Is this an image of St. Martin (Sontheim)? Please answer yes or no.	Yes	No, this image is
@@ -215,9 +213,7 @@ Alright
 05bcf05b4460d2c3.jpg	Is this an image of Museo archeologico nazionale dell'Umbria? Please answer yes or no.	Yes	Yes, this is an
 05bcf05b4460d2c3.jpg	Is this an image of Mode Gakuen Cocoon Tower? Please answer yes or no.	No	Yes, this is an
 05c3aa404351f407.jpg	Is this an image of Pasaje Gutierrez (Valladolid)? Please answer yes or no.	Yes	No, this is not
-05c3aa404351f407.jpg	Is this an image of Pieve di Santa Maria a Carli? Please answer yes or no.	No	No.
-
-##
+05c3aa404351f407.jpg	Is this an image of Pieve di Santa Maria a Carli? Please answer yes or no.	No	No.  ##
 05d56e249af839e7.jpg	Is this a photo of Serbian Orthodox Cathedral in Sarajevo? Please answer yes or no.	Yes	The photo shows a view
 05d56e249af839e7.jpg	Is this a photo of Seewaldsee (Sankt Koloman)? Please answer yes or no.	No	No.
 06134984e2aa9bcc.jpg	Is this a picture of Grote Kerk (Groede)? Please answer yes or no.	Yes	The image shows a church
@@ -234,7 +230,7 @@ Alright
 067ea27ec08c9354.jpg	Is this a picture of The Haining? Please answer yes or no.	No	No.
 06a85d0b5d70881d.jpg	Is this an image of Silwan? Please answer yes or no.	Yes	Yes.
 06a85d0b5d70881d.jpg	Is this an image of Jagdschloss Platte? Please answer yes or no.	No	This is an image of
-06ab45292ecd8bf7.jpg	Is this a picture of Maribor Regional Museum? Please answer yes or no.	Yes	The image shows a display
+06ab45292ecd8bf7.jpg	Is this a picture of Maribor Regional Museum? Please answer yes or no.	Yes	The image shows a collection
 06ab45292ecd8bf7.jpg	Is this a picture of Myres Castle? Please answer yes or no.	No	No.
 06b6531dab42ccab.jpg	Is this a picture of Roland (Riga)? Please answer yes or no.	Yes	No, this is not
 06b6531dab42ccab.jpg	Is this a picture of Wudangshan Shangdi Temple? Please answer yes or no.	No	Yes, this is a
@@ -302,7 +298,7 @@ Alright
 0ae3355e0a54db21.jpg	Is this a photo of Lough Owel? Please answer yes or no.	No	Yes
 0b4240b5ef69362e.jpg	Is this a photo of Saint Anne church in Nowa Ruda? Please answer yes or no.	Yes	Yes, this is a
 0b4240b5ef69362e.jpg	Is this a photo of Bray Wick? Please answer yes or no.	No	I am sorry, but
-0b64944086932c90.jpg	Is this a picture of Alte Pfarrkirche St. Martin (Moosach)? Please answer yes or no.	Yes	Yes.
+0b64944086932c90.jpg	Is this a picture of Alte Pfarrkirche St. Martin (Moosach)? Please answer yes or no.	Yes	Yes, this is a
 0b64944086932c90.jpg	Is this a picture of Maya Devi Temple, Lumbini? Please answer yes or no.	No	No.
 0b8fa4152f1bc3ed.jpg	Is this a picture of Lac du Salagou? Please answer yes or no.	Yes	I'm sorry,
 0b8fa4152f1bc3ed.jpg	Is this a picture of Holsljunga kyrka? Please answer yes or no.	No	No, this is not
@@ -328,9 +324,7 @@ Alright
 0d23f6c345b68c05.jpg	Is this an image of Crackstate? Please answer yes or no.	No	No. The image shows
 0d70bceb2557d1f4.jpg	Is this an image of Spaso-Preobrazhensky Cathedral (Pereslavl-Zalessky)? Please answer yes or no.	Yes	This is an image of
 0d70bceb2557d1f4.jpg	Is this an image of Manta Rota? Please answer yes or no.	No	No, it's
-0d7716f4aed0c9fa.jpg	Is this a photo of Willemsbrug in Rotterdam? Please answer yes or no.	Yes	Yes.
-
-W
+0d7716f4aed0c9fa.jpg	Is this a photo of Willemsbrug in Rotterdam? Please answer yes or no.	Yes	Yes.  W
 0d7716f4aed0c9fa.jpg	Is this a photo of Grumentum, Parco archeologico? Please answer yes or no.	No	No.
 0d89a8a5e8c269e4.jpg	Is this an image of Burg Normannstein? Please answer yes or no.	Yes	Yes.
 0d89a8a5e8c269e4.jpg	Is this an image of Cape Borda Lighthouse? Please answer yes or no.	No	No.
@@ -353,9 +347,7 @@ W
 1023b7ec812bb4c6.jpg	Is this a photo of St. Joseph's Cathedral, Dunedin? Please answer yes or no.	Yes	Yes, this is a
 1023b7ec812bb4c6.jpg	Is this a photo of Fagervik Church? Please answer yes or no.	No	No, this is not
 1053f4cebfceabd8.jpg	Is this an image of Woolwich foot tunnel? Please answer yes or no.	Yes	I'm sorry,
-1053f4cebfceabd8.jpg	Is this an image of Kirchenbibliothek St. Marien Barth? Please answer yes or no.	No	No.
-
-As
+1053f4cebfceabd8.jpg	Is this an image of Kirchenbibliothek St. Marien Barth? Please answer yes or no.	No	No.  As
 10a944858a4283e0.jpg	Is this a picture of Harding Tomb? Please answer yes or no.	Yes	No, this is not
 10a944858a4283e0.jpg	Is this a picture of Kartause Ittingen? Please answer yes or no.	No	The image is of the
 10b2b8741f283a3c.jpg	Is this a photo of De Bataaf, Winterswijk? Please answer yes or no.	Yes	The image shows a tall

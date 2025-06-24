@@ -38,9 +38,7 @@
 000000426241.jpg	Is the white mouse on the left of the black keyboard? Please answer yes or no.	No	The white mouse on the
 000000450303.jpg	Is the monitor on top of a person? Please answer yes or no.	Yes	Yes.
 000000450303.jpg	Is the monitor under the person? Please answer yes or no.	No	The image shows a group
-000000458410.jpg	Is the TV on the left of the lamp? Please answer yes or no.	Yes	Yes
-
-The living
+000000458410.jpg	Is the TV on the left of the lamp? Please answer yes or no.	Yes	Yes  The living
 000000458410.jpg	Is the TV on the right of the lamp? Please answer yes or no.	No	Yes.
 000000472046.jpg	Is the pineapple on the left of the pot in the image? Please answer yes or no.	Yes	Yes.
 000000472046.jpg	Is the pineapple on the right of the pot in the image? Please answer yes or no.	No	The image shows a modern
@@ -53,9 +51,7 @@ The living
 000000509699.jpg	Is the mirror above the TV? Please answer yes or no.	Yes	No.
 000000509699.jpg	Is the mirror under the TV? Please answer yes or no.	No	No, the mirror is
 000000519569.jpg	Is the vase on the left of the bottle? Please answer yes or no.	Yes	No.
-000000519569.jpg	Is the vase on the right of the bottle? Please answer yes or no.	No	Yes.
-
-The
+000000519569.jpg	Is the vase on the right of the bottle? Please answer yes or no.	No	Yes.  The
 000000530162.jpg	Is the big red and black umbrella on the top of people? Please answer yes or no.	Yes	Yes.
 000000530162.jpg	Is the big red and black umbrella under people? Please answer yes or no.	No	The people in the photo
 000000551660.jpg	Is the spoon in the bowl? Please answer yes or no.	Yes	No, there is no

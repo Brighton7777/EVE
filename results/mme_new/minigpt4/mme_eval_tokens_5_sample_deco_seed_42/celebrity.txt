@@ -181,7 +181,7 @@ tt0095016_shot_1170_img_0.jpg	Is the actor inside the red bounding box called Ca
 tt0095250_shot_0509_img_0.jpg	Is the actor inside the red bounding box named Jean Reno? Please answer yes or no.	Yes	No, the actor inside
 tt0095250_shot_0509_img_0.jpg	Is the actor inside the red bounding box named Ralph Meyering Jr.? Please answer yes or no.	No	No
 tt0095765_shot_0008_img_0.jpg	Is the actor inside the red bounding box called Antonella Attili? Please answer yes or no.	Yes	The answer is yes.
-tt0095765_shot_0008_img_0.jpg	Is the actor inside the red bounding box called Amber Estrada? Please answer yes or no.	No	No.
+tt0095765_shot_0008_img_0.jpg	Is the actor inside the red bounding box called Amber Estrada? Please answer yes or no.	No	No
 tt0095953_shot_0412_img_0.jpg	Is the person inside the red bounding box named Tom Cruise? Please answer yes or no.	Yes	Yes, the person inside
 tt0095953_shot_0412_img_0.jpg	Is the person inside the red bounding box named Lara Mulcahy? Please answer yes or no.	No	Yes.
 tt0096320_shot_0085_img_0.jpg	Is the actor inside the red bounding box called Arnold Schwarzenegger? Please answer yes or no.	Yes	Yes, the actor inside
@@ -270,7 +270,7 @@ tt0115798_shot_0844_img_1.jpg	Is the person inside the red bounding box named Ji
 tt0115798_shot_0844_img_1.jpg	Is the person inside the red bounding box named Renee Herlocker? Please answer yes or no.	No	No, the person inside
 tt0116367_shot_0755_img_0.jpg	Is the actor inside the red bounding box named George Clooney? Please answer yes or no.	Yes	Yes
 tt0116367_shot_0755_img_0.jpg	Is the actor inside the red bounding box named Ben Crowley? Please answer yes or no.	No	No, the actor inside
-tt0116629_shot_1570_img_2.jpg	Is the person inside the red bounding box called Will Smith? Please answer yes or no.	Yes	Yes
+tt0116629_shot_1570_img_2.jpg	Is the person inside the red bounding box called Will Smith? Please answer yes or no.	Yes	No
 tt0116629_shot_1570_img_2.jpg	Is the person inside the red bounding box called E. Katherine Kerr? Please answer yes or no.	No	No, the person inside
 tt0116695_shot_0343_img_0.jpg	Is the person inside the red bounding box named Tom Cruise? Please answer yes or no.	Yes	No.
 tt0116695_shot_0343_img_0.jpg	Is the person inside the red bounding box named Billy Dee? Please answer yes or no.	No	No, the person inside

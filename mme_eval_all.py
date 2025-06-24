@@ -66,7 +66,7 @@ def eval_model(args):
                         return_dict=True,
                         **kwargs
                     )
-                response = model_loader.decode(outputs)[0]
+                response = model_loader.decode(outputs)[0].replace('\n', ' ')
 
                 print(img, question, gt, response, sep='\t', file=fout)
 

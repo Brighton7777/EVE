@@ -99,7 +99,7 @@ tt0133093.jpg	Is this movie directed by siu-tung ching? Please answer yes or no.
 tt0163025.jpg	Is this movie directed by joe johnston? Please answer yes or no.	Yes	Yes.
 tt0163025.jpg	Is this movie directed by adam robitel? Please answer yes or no.	No	No, this movie is
 tt0166924.jpg	Is this movie titled mulholland drive (2001)? Please answer yes or no.	Yes	The movie title is Mul
-tt0166924.jpg	Is this movie titled lucky number slevin (2006)? Please answer yes or no.	No	Yes
+tt0166924.jpg	Is this movie titled lucky number slevin (2006)? Please answer yes or no.	No	No
 tt0167261.jpg	Is this movie directed by peter jackson? Please answer yes or no.	Yes	The Lord of the R
 tt0167261.jpg	Is this movie directed by gabe ibáñez? Please answer yes or no.	No	No, this movie is
 tt0182789.jpg	Is this movie titled bicentennial man (1999)? Please answer yes or no.	Yes	No, this movie is
@@ -255,14 +255,14 @@ tt3316960.jpg	Is this movie originated from the country or region of west german
 tt3465916.jpg	Is this movie originated from the country or region of germany? Please answer yes or no.	Yes	Yes, this movie origin
 tt3465916.jpg	Is this movie originated from the country or region of spain? Please answer yes or no.	No	Yes
 tt3495026.jpg	Is this movie titled fan (2016)? Please answer yes or no.	Yes	Yes, this movie is
-tt3495026.jpg	Is this movie titled from afar (2015)? Please answer yes or no.	No	Yes
+tt3495026.jpg	Is this movie titled from afar (2015)? Please answer yes or no.	No	No
 tt3498820.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes	No, this movie origin
 tt3498820.jpg	Is this movie originated from the country or region of germany? Please answer yes or no.	No	No, this movie origin
 tt3700804.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes	Yes, this movie origin
 tt3700804.jpg	Is this movie originated from the country or region of uk? Please answer yes or no.	No	The answer to this question
 tt3824458.jpg	Is this movie titled tangerine (2015)? Please answer yes or no.	Yes	No.
 tt3824458.jpg	Is this movie titled miller's crossing (1990)? Please answer yes or no.	No	Yes.
-tt3860916.jpg	Is this movie directed by ben howling? Please answer yes or no.	Yes	I cannot answer this question
+tt3860916.jpg	Is this movie directed by ben howling? Please answer yes or no.	Yes	The movie is directed by
 tt3860916.jpg	Is this movie directed by quentin tarantino? Please answer yes or no.	No	No, this movie is
 tt4046784.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes	Yes
 tt4046784.jpg	Is this movie originated from the country or region of uk? Please answer yes or no.	No	No, this movie is

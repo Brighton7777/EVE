@@ -260,7 +260,7 @@ tt0112740_shot_1056_img_0.jpg	Is the person inside the red bounding box named De
 tt0112740_shot_1056_img_0.jpg	Is the person inside the red bounding box named Bill Pullman? Please answer yes or no.	No	No.
 tt0113101_shot_0547_img_0.jpg	Is the person inside the red bounding box named Tim Roth? Please answer yes or no.	Yes	No.
 tt0113101_shot_0547_img_0.jpg	Is the person inside the red bounding box named Honey Chhaya? Please answer yes or no.	No	The person in the image
-tt0114369_shot_1138_img_0.jpg	Is the person inside the red bounding box named Brad Pitt? Please answer yes or no.	Yes	Yes, the person in
+tt0114369_shot_1138_img_0.jpg	Is the person inside the red bounding box named Brad Pitt? Please answer yes or no.	Yes	The person in the image
 tt0114369_shot_1138_img_0.jpg	Is the person inside the red bounding box named Benjamin Nitze? Please answer yes or no.	No	No, the person is
 tt0114388_shot_0162_img_0.jpg	Is the actor inside the red bounding box called Emma Thompson? Please answer yes or no.	Yes	Yes.
 tt0114388_shot_0162_img_0.jpg	Is the actor inside the red bounding box called Francis P. Hughes? Please answer yes or no.	No	The actor inside the red
