@@ -28,7 +28,7 @@ def eval_model(args):
     # Model
     disable_torch_init()
     model_loader = ModelLoader(args.model)
-    base_dir = "./results/chair_opera_new/" + args.model
+    base_dir = "./results/chair_opera_new_tmp/" + args.model
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 
@@ -65,6 +65,9 @@ def eval_model(args):
 
         if args.model == "llava-v1.5":
             model_loader.vlm_model.config.image_aspect_ratio = None
+
+        if args.model == "qwen-vl":
+            qs = "Describe this image in detail."
 
         questions, kwargs = model_loader.prepare_inputs_for_model(
             template, qs, image_path

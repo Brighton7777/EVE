@@ -42,7 +42,7 @@ def recorder(out):
 
 def eval_model(args, model_loader):
 
-    base_dir = "./results/pope_all_new/" + args.model
+    base_dir = "./results/pope_all_new_1118/" + args.model
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 

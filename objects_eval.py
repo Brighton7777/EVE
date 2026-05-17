@@ -47,7 +47,7 @@ def eval_model(args):
     disable_torch_init()
     model_loader = ModelLoader(args.model)
     evaluator = pickle.load(open("/data1/zhr/checkpoints/chair/cache.pkl", 'rb'))
-    base_dir = "./results/objects/" + args.model
+    base_dir = "./results/objects_1111/" + args.model
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 
@@ -72,8 +72,10 @@ def eval_model(args):
     total_data_num = 0
     jsd_act_data_num = 0
     deco_act_data_num = 0
+    random_act_data_num = 0
     jsd_act_gt_word_num = 0
     deco_act_gt_word_num = 0
+    random_act_gt_word_num = 0
     ans_file = open(answers_file, "w")
     jsd_val_min = 1000
     jsd_val_gt_min = 1000
@@ -116,7 +118,6 @@ def eval_model(args):
                 max_new_tokens=1,
                 use_jsd = args.use_jsd,
                 alpha = args.alpha,
-                beta = args.beta,
                 threshold_top_p = args.threshold_top_p, 
                 threshold_top_k = args.threshold_top_k,
                 early_exit_layers=[i for i in range(args.start_layer, args.end_layer)],
@@ -136,6 +137,9 @@ def eval_model(args):
         jsd_logits = output_dict.jsd_logits[0].detach().cpu().numpy()
         jsd_var_probs = output_dict.jsd_var_probs[0].detach().cpu().numpy()
         jsd_var_logits = output_dict.jsd_var_logits[0].detach().cpu().numpy()
+        random_layer_idx = output_dict.random_layer_idx[0]
+        random_logits = output_dict.random_logits[0].detach().cpu().numpy()
+        random_probs = output_dict.random_probs[0].detach().cpu().numpy()
 
         next_word = candidate_words[0]
         if is_gt_word(next_word, gt_words, evaluator) or len(candidate_words)==1:
@@ -146,23 +150,31 @@ def eval_model(args):
         total_data_num += 1
         jsd_act_gt_num = 0
         deco_act_gt_num = 0
+        random_act_gt_num = 0
         
         for i in range(1,len(candidate_words)):
             word = candidate_words[i]
             if is_gt_word(word, gt_words, evaluator):
                 # if jsd_probs[i]-jsd_probs[0] > args.threshold_act:
-                # if jsd_var_probs[i]-jsd_var_probs[0] > args.threshold_act:
-                if jsd_var_logits[i]-jsd_var_logits[0] > args.threshold_act:
+                if jsd_var_probs[i]-jsd_var_probs[0] > args.threshold_act:
+                # if jsd_var_logits[i]-jsd_var_logits[0] > args.threshold_act:
                     jsd_act_gt_num += 1
                     line["jsd_act_gt_words"].append(word)
-                # elif jsd_probs[i]-jsd_probs[0] > args.threshold_act:
-                elif jsd_logits[i]-jsd_logits[0] > args.threshold_act:
+                elif jsd_probs[i]-jsd_probs[0] > args.threshold_act:
+                # elif jsd_logits[i]-jsd_logits[0] > args.threshold_act:
                     jsd_probs_better_idx.append((valid_idx, word))
 
-                # if deco_probs[i]-deco_probs[0] > args.threshold_act:
-                if deco_logits[i]-deco_logits[0] > args.threshold_act:
+                if deco_probs[i]-deco_probs[0] > args.threshold_act:
+                # if deco_logits[i]-deco_logits[0] > args.threshold_act:
                     deco_act_gt_num += 1
                     line["deco_act_gt_words"].append(word)
+                if random_probs[i]-random_probs[0] > args.threshold_act:
+                # if random_logits[i]-random_logits[0] > args.threshold_act:
+                    random_act_gt_num += 1
+        
+        if random_act_gt_num > 0:
+            random_act_data_num += 1
+
         if jsd_act_gt_num > 0:
             jsd_act_data_num += 1
             jsd_val_gt_min = min(jsd_val_gt_min, jsd_val)
@@ -185,10 +197,13 @@ def eval_model(args):
 
         jsd_act_gt_word_num += jsd_act_gt_num
         deco_act_gt_word_num += deco_act_gt_num
+        random_act_gt_word_num += random_act_gt_num
         line["jsd_act_gt_num"] = jsd_act_gt_num
         line["deco_act_gt_num"] = deco_act_gt_num
+        line["random_act_gt_num"] = random_act_gt_num
         line["jsd_layer_idx"] = jsd_layer_idx
         line["deco_layer_idx"] = deco_layer_idx
+        line["random_layer_idx"] = random_layer_idx
         line["jsd_val"] = jsd_val
         line["valid_idx"] = valid_idx
         valid_idx += 1
@@ -207,10 +222,13 @@ def eval_model(args):
     ans_dict = {"total_data_num": total_data_num,
                 "jsd_act_data_num": jsd_act_data_num,
                 "deco_act_data_num": deco_act_data_num,
+                "random_act_data_num": random_act_data_num,
                 "jsd_act_word_num": jsd_act_gt_word_num,
                 "deco_act_word_num": deco_act_gt_word_num,
+                "random_act_word_num": random_act_gt_word_num,
                 "jsd_act_rate": jsd_act_data_num/total_data_num,
                 "deco_act_rate": deco_act_data_num/total_data_num,
+                "random_act_rate": random_act_data_num/total_data_num,
                 "threshold_act": args.threshold_act,
                 "jsd_val_min": jsd_val_min,
                 "jsd_val_max": jsd_val_max,
@@ -248,10 +266,9 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=1)
-    parser.add_argument("--use_jsd", type=int, default=4)
+    parser.add_argument("--use_jsd", type=int, default=3)
     parser.add_argument("--use_deco", action="store_true")
     parser.add_argument("--alpha", type=float, default=0.6)
-    parser.add_argument("--beta", type=float, default=0.1)
     parser.add_argument("--threshold_top_p", type=float, default=0.9)
     parser.add_argument("--threshold_top_k", type=int, default=20)
     parser.add_argument("--start_layer", type=int, default=20)
