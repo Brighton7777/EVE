@@ -1,6 +1,6 @@
 # EVE
 
-## Setup
+## 安装 
 
 EVE方法代码在`transformers/generation/utils.py`.
 
@@ -13,6 +13,7 @@ pip install -r requirements.txt
 ## 测试基准
 ### COCO数据集
 数据集路径：`/data1/zhr/datasets/coco2014/val2014/`
+
 ### CHAIR
 - 生成答案并保存为 jsonl 文件，以 LLaVA-1.5 为例:
 ```bash
