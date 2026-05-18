@@ -12,7 +12,7 @@ import torch
 
 def eval_model(args):
     model_loader = ModelLoader(args.model)
-    base_dir = "./results/mme_new/" + args.model
+    base_dir = "./results/mme_eve/" + args.model
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 
@@ -22,7 +22,7 @@ def eval_model(args):
         f"_tokens_{args.max_new_tokens}",
         "_sample" if args.sample else "",
         f"_beams_{args.num_beams}" if args.num_beams != 1 else "",
-        f"_jsd_{args.use_jsd}" if args.use_jsd else "",
+        f"_eve" if args.use_jsd else "",
         "_deco" if args.use_deco else "",
         f"_layers_{args.start_layer}-{args.end_layer}" if args.use_jsd else "",
         f"_alpha_{args.alpha}" if args.use_jsd else "",

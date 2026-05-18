@@ -22,53 +22,60 @@ import math
 import re
 from transformers import set_seed
 
+POPE_PATH = {
+    "random": "./pope_coco/coco_pope_random.json",
+    "popular": "./pope_coco/coco_pope_popular.json",
+    "adversarial": "./pope_coco/coco_pope_adversarial.json",
+}
 
-def eval_model(args):
+def recorder(out):
+    word_list = re.split(r'[^\w]+', out.lower())
+    if "yes" in word_list:
+        return "Yes"
+    else:
+        return "No"
     
-    # Model
-    disable_torch_init()
-    model_loader = ModelLoader(args.model)
-    base_dir = "./results/chair_opera_new_tmp/" + args.model
+# def image_parser(args):
+#     out = args.image_file.split(args.sep)
+#     return out
+
+
+def eval_model(args, model_loader):
+
+    base_dir = "./results/pope_eve/" + args.model
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 
     # dump metric file
     file_parts = [
-        f"chair_eval_opera",
-        f"_tokens_{args.max_new_tokens}",
+        f"pope_eval_{args.pope_type}",
         "_sample" if args.sample else "",
+        f"_top_p_{args.top_p}" if args.sample else "",
+        f"_temp_{args.temperature}" if args.sample else "",
         f"_beams_{args.num_beams}" if args.num_beams != 1 else "",
-        f"_jsd_{args.use_jsd}" if args.use_jsd else "",
+        f"_eve" if args.use_jsd else "",
         "_deco" if args.use_deco else "",
         f"_layers_{args.start_layer}-{args.end_layer}" if args.use_jsd else "",
         f"_alpha_{args.alpha}" if args.use_jsd else "",
         f"_top_p_{args.threshold_top_p}" if args.use_jsd else "",
         f"_top_k_{args.threshold_top_k}" if args.use_jsd else "",
         f"_seed_{args.seed}",
-        f"_{args.part}" if args.part else "",
     ]
     file_name = "".join(file_parts)
 
     template = INSTRUCTION_TEMPLATE[args.model]
+    args.pope_path = POPE_PATH[args.pope_type]
 
-    with open("./opera_log/llava-1.5/ours.jsonl", "r", encoding="utf-8") as f:
-        data_lines = f.readlines()
-
+    questions = [json.loads(q) for q in open(os.path.expanduser(args.pope_path), "r")]
     answers_file = os.path.join(base_dir, file_name + ".jsonl")
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
-    for data_line in tqdm(data_lines, total=500):
-        line = json.loads(data_line)
-        idx = line["image_id"]
-        image_path = args.data_path + "COCO_val2014_" + str(idx).zfill(12) + ".jpg"
-        qs = "Please describe this image in detail."
-
-        if args.model == "llava-v1.5":
-            model_loader.vlm_model.config.image_aspect_ratio = None
-
-        if args.model == "qwen-vl":
-            qs = "Describe this image in detail."
-
+    for line in tqdm(questions):
+        idx = line["question_id"]
+        image_path = args.data_path + line["image"]
+        qs = line["text"]
+        label = line["label"]
+        
         questions, kwargs = model_loader.prepare_inputs_for_model(
             template, qs, image_path
         )
@@ -80,7 +87,7 @@ def eval_model(args):
                 top_p=args.top_p,
                 num_beams=args.num_beams,
                 use_cache=True,
-                max_new_tokens=args.max_new_tokens,
+                max_new_tokens=5,
                 use_deco = args.use_deco,
                 use_jsd = args.use_jsd,
                 alpha = args.alpha,
@@ -93,13 +100,19 @@ def eval_model(args):
             )
         output_text = model_loader.decode(outputs)[0]
 
-        ans_file.write(json.dumps({"image_id": idx, "caption": output_text}, ensure_ascii=False) + "\n")
+        ans_file.write(json.dumps({"question_id": idx,
+                                   "prompt": qs,
+                                   "text": recorder(output_text),
+                                   "label": label,
+                                   "image": line["image"],
+                                   }) + "\n")
         ans_file.flush()
     ans_file.close()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="CHAIR evaluation on LVLMs.")
+    parser = argparse.ArgumentParser(description="POPE evaluation on LVLMs.")
     parser.add_argument("--model", type=str, help="model")
+    parser.add_argument("--pope-type", type=str, help="model", default="all")
     parser.add_argument(
         "--data-path",
         type=str,
@@ -120,13 +133,26 @@ if __name__ == "__main__":
     parser.add_argument("--start_layer", type=int, default=20)
     parser.add_argument("--end_layer", type=int, default=29)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--part", type=str, default="")
     args = parser.parse_args()
     if args.use_jsd:
-        print("use jsd", args.use_jsd)
+        print("use_jsd", args.use_jsd)
     if args.use_deco:
-        print("use deco")
+        print("use_deco")
     assert not (args.use_jsd is True and args.use_deco is True), "use_jsd is True and use_deco is True"
+    
+    
     set_seed(args.seed)
-    eval_model(args)
+    # Model
+    disable_torch_init()
+    model_loader = ModelLoader(args.model)
+
+    if args.pope_type == "all":
+        args.pope_type = "random"
+        eval_model(args, model_loader)
+        args.pope_type = "popular"
+        eval_model(args, model_loader)
+        args.pope_type = "adversarial"
+        eval_model(args, model_loader)
+    else:
+        eval_model(args, model_loader)
 
