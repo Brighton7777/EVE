@@ -1,18 +1,36 @@
 # EVE
 
+## 论文
+论文链接：https://www.onlinelatex.com/6954114316xrfyrsssrzsk#def462
+
+论文图片在 [figures](./figures/)
+
 ## 安装 
 
 EVE方法代码在`transformers/generation/utils.py`.
 
 ```
+# pip 安装
 conda create -n eve python==3.9
 conda activate eve
 pip install -r requirements.txt
+# 本地 clone
+conda create -n eve --clone /home/zhr/.conda/envs/eve
 ```
 
 ## 测试基准
 ### COCO数据集
 数据集路径：`/data1/zhr/datasets/coco2014/val2014/`
+
+所有评估脚本：
+```bash
+# chair
+bash ./all_results/chair_run_ans.sh
+# pope
+bash ./all_results/pope_run_ans.sh
+# mme
+bash ./all_results/mme_run_ans.sh
+```
 
 ### CHAIR
 - 生成答案并保存为 jsonl 文件，以 LLaVA-1.5 为例:
@@ -59,3 +77,15 @@ python mme_calculation.py --results_dir /path/to/dir
 
 ## 可视化
 可视化 demo 在 [JSD_examples.ipynb](./JSD_examples.ipynb).
+
+## 消融实验
+
+以LLaVA-1.5为例：
+```bash
+# w/o jsd_max_val
+python pope_eval_mode.py --model llava-v1.5 --use_jsd 2 --mode 1 
+# w/o max_probs
+python pope_eval_mode.py --model llava-v1.5 --use_jsd 2 --mode 2
+# w/o both
+python pope_eval_mode.py --model llava-v1.5 --use_jsd 2 --mode 3
+```
