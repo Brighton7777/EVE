@@ -1,6 +1,8 @@
-./results/
-./results_4090/
-./minigpt4/
-./llava/
-./all_results/
-./qwen_vl/
+# Result and evaluation output folders
+**/*[rR][eE][sS][uU][lL][tT]*/
+
+# Large model and figure folders
+**/llava/
+**/minigpt4/
+**/qwen_vl/
+**/figures/
